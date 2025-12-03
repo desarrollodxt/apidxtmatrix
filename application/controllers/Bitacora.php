@@ -304,17 +304,27 @@ class Bitacora extends CI_Controller
 
         $datos = $_POST;
         $cv = $datos["cv"];
-        
         $evidencias = [];
-         for ($i = 0; $i < count($_FILES["evidencia"]["name"]); $i++) {
-             $evidencias[] = [
-                 "name" => $_FILES["evidencia"]["name"][$i],
-                 "type" => $_FILES["evidencia"]["type"][$i],
-                 "tmp_name" => $_FILES["evidencia"]["tmp_name"][$i],
-                 "error" => $_FILES["evidencia"]["error"][$i],
-                 "size" => $_FILES["evidencia"]["size"][$i],
-             ];
-         }
+        // Si 'name' es array es multifile antiguo, si no es single file (actual)
+        if (isset($_FILES["evidencia"]["name"]) && is_array($_FILES["evidencia"]["name"])) {
+            for ($i = 0; $i < count($_FILES["evidencia"]["name"]); $i++) {
+                $evidencias[] = [
+                    "name" => $_FILES["evidencia"]["name"][$i],
+                    "type" => $_FILES["evidencia"]["type"][$i],
+                    "tmp_name" => $_FILES["evidencia"]["tmp_name"][$i],
+                    "error" => $_FILES["evidencia"]["error"][$i],
+                    "size" => $_FILES["evidencia"]["size"][$i],
+                ];
+            }
+        } elseif (isset($_FILES["evidencia"]["name"]) && $_FILES["evidencia"]["name"] != "") {
+            $evidencias[] = [
+                "name" => $_FILES["evidencia"]["name"],
+                "type" => $_FILES["evidencia"]["type"],
+                "tmp_name" => $_FILES["evidencia"]["tmp_name"],
+                "error" => $_FILES["evidencia"]["error"],
+                "size" => $_FILES["evidencia"]["size"],
+            ];
+        }
 
         $ultimoStatus = $this->Bitacora_model->getUltimoStatusCv($cv);
         
