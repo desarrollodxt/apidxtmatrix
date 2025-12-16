@@ -354,4 +354,19 @@ class Indicadores_model extends CI_Model
             "data" => $datos
         ];
     }
+
+    public function getReporte($reporte){
+        $query = $this->db->where('id', $reporte)->get('reportes');
+        return $query->result_array();
+    }
+
+    public function getReporteData($data){
+        $query = $this->db->query($data[0]["query"]);
+        $result = $query->result_array();
+        $simple_array = [];
+        foreach ($result as $row) {
+            $simple_array[] = array_values($row);
+        }
+        return $simple_array;
+    }
 }

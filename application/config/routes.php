@@ -104,3 +104,5 @@ $route["getCuentasXPagar"] = "Indicadores/getCuentasXPagar";
 
 
 $route["entregaEvidenciaAgent"] = "Bitacora/EntregaEvidenciaAgent";
+
+$route["reportesAjax/(:any)"] = "Indicadores/reportesAjax/$1";

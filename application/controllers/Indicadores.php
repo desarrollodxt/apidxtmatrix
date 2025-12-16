@@ -212,4 +212,12 @@ class Indicadores extends CI_Controller
             $this->responder(true, "Error al obtener las carteras", null, 500);
         }
     }
+
+    public function reportesAjax($reporte){
+        $this->load->model('Indicadores_model');
+        $data = $this->Indicadores_model->getReporte($reporte);
+        $result = $this->Indicadores_model->getReporteData($data);
+        
+        $this->responder(false, "Reporte obtenido correctamente", $result, 200);
+    }
 }
