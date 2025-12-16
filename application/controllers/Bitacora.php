@@ -333,7 +333,7 @@ class Bitacora extends CI_Controller
             
              if ($evidencias[0]["name"] != "") {
                  foreach ($evidencias as $evidencia) {
-                     $nombre_archivo = $this->carga_achivo($evidencia, "/home/u613393165/domains/gcsmatrix.com/public_html/dxt/vista/bitacora/", '');
+                     $nombre_archivo = $this->carga_achivo($evidencia, __DIR__ .'../../../../vista/bitacora/', '');
                      $this->Bitacora_model->setEvidencia($nombre_archivo["nombre_archivo"], $nombre_archivo["extension"], "/vista/bitacora/", "evidencia_movimiento", null, $ultimoStatus["id"]);
                  }
              }
@@ -341,15 +341,15 @@ class Bitacora extends CI_Controller
             $this->responder(false, "Evidencia agregada",  null, 200);
         }
 
-        $fechaMovimiento = $datos["fecha_entrega"];
-        $horaMovimiento = $datos["hora_entrega"];
+        $fechaMovimiento = date("Y-m-d");
+        $horaMovimiento = date("H:i:s");
         $statusID = 8;
-        $observaciones = $datos["observaciones"];
-        $coordenadas = $datos["coordenadas"];
-        $ubicacion = $datos["ubicacion"];
+        $observaciones = "Evidencia entregada";
+        $coordenadas = "";
+        $ubicacion = "Entrega de evidencia";
         $usuario = $datos["usuario"];
         
-        $fechaHoraMovimiento = $fechaMovimiento . " " . $horaMovimiento . ":00";
+        $fechaHoraMovimiento = $fechaMovimiento . " " . $horaMovimiento;
 
         $id_ln = $this->Bitacora_model->setMovimientoNuevo($cv, $usuario, $statusID, $observaciones, $coordenadas, $ubicacion, $fechaHoraMovimiento);
         $this->load->helper('uploadfile_helper');
